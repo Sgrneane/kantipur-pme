@@ -114,7 +114,7 @@ WSGI_APPLICATION = 'fpn.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'antggjb_project_monitoring_evaluation', #lims_new
+        'NAME': 'kantggjb_project_monitoring_evaluation', #lims_new
         'USER': 'kantggjb_pmedb',
         'PASSWORD':'e!8q?]DU*04i',
         'HOST':'localhost',
