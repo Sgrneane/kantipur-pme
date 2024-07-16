@@ -1,0 +1,211 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block container %}
+
+                <div class="add-heading">
+                    <h3 class="heading-cm">
+                        <a href="http://127.0.0.1:5500/html/" class="nav-icon me-2">
+                            <i class="fa-solid fa-angle-left"></i>
+                        </a>
+                        मासिक प्रगति विवरण <span class="sub-nav ms-2"> > रिपोर्ट</span>
+                    </h3>
+                </div>
+                <form action="" class="report-form">
+                <div class="row mb-4 filter-row filters">
+                    
+                    <div class="row">
+                        <div class="col-md-8">
+                            <select id="month" name="status" class="form-select kit-form-control" placeholder="Select Month" required onclick="">
+                                <option value="all" disabled selected hidden>महिना छान्नुहोस्</option>
+                                <option value="01">बैशाख</option>
+                                <option value="02">जेठ</option>
+                                <option value="03">असार</option>
+                                <option value="04">श्रावण</option>
+                                <option value="05">भदौ</option>
+                                <option value="06">आश्विन</option>
+                                <option value="07">कार्तिक</option>
+                                <option value="08">मंसिर</option>
+                                <option value="09">पुष</option>
+                                <option value="10">माघ</option>
+                                <option value="11">फाल्गुन</option>
+                                <option value="12">चैत्र</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" id="reset">रिसेट</button>
+                        </div>
+                    </div>
+                    
+                </div>
+                </form>
+
+                
+
+
+                <div class="form-cm" id="report-container">
+                    <div class="row mb-3">
+                        <div class="col-md-12 text-end">
+                            <button onclick="ExportToExcel('xlsx')" class="btn btn-primary">डाउनलोड रिपोर्ट</button>
+                        </div>
+                    </div>
+                    
+
+                    
+                    
+                    <table class="table count-report-table" id="monthly_report">
+                        <thead>
+                          <tr>
+                            <th scope="col">क्र.स.</th>
+                            <th scope="col">बजेट उप-शिर्षक नं.</th>
+                            <th scope="col">आयोजना/ कार्यक्रमको नाम</th>
+                            <th scope="col" colspan="6">मुख्य मुख्य प्रतिफलहरुको विवरण</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr>
+                            <td rowspan="12">1</td>
+                            <td rowspan="12">31203101</td>
+                            <td rowspan="12" class="border-left-table">खाद्य पोषण तथा प्रविधि</td>
+                            <th>क्र.स.</th>
+                            <th>मुख्य मुख्य कार्यहरु</th>
+                            <th>इकाई</th>
+                            <th>वार्षिक लक्ष्य</th>
+                            <th>यस महिनाको प्रगति</th>
+                            <th>हालसम्मको प्रगति</th>
+                          </tr>
+                          <tr>
+                            <td>1</td>
+                            <td>खाद्य ऐन/नियम बमोजिम संकलित नमुना विवरण</td>
+                            <td>संख्या</td>
+                            <td>{{obj.namuna_bibaran|default_if_none:'----'}}</td>
+                            <td>{{namuna_bibaran_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{namuna_bibaran_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>2</td>
+                            <td>निरीक्षण अनुगमन विवरण</td>
+                            <td>संख्या</td>
+                            <td>{{obj.anugaman|default_if_none:'----'}}</td>
+                            <td>{{anugaman_bibaran_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{anugaman_bibaran_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>3</td>
+                            <td>होटल स्तरीकरण लोगो वितरण सम्बन्धि विवरण</td>
+                            <td>संख्या</td>
+                            <td>{{obj.logo|default_if_none:'----'}}</td>
+                            <td>{{logo_bitaran_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{logo_bitaran_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>4</td>
+                            <td>खाद्य तथा दाना नमुना विश्लेषण विवरण</td>
+                            <td>संख्या</td>
+                            <td>{{obj.namuna_bisleysan|default_if_none:'----'}}</td>
+                            <td>{{namuna_bisleysan_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{namuna_bisleysan_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>5</td>
+                            <td>प्रयोगशाला विश्लेषण प्रतिवेदन सारांश</td>
+                            <td>संख्या</td>
+                            <td>{{obj.prayogsala|default_if_none:'----'}}</td>
+                            <td>{{prayog_sala_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{prayog_sala_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>6</td>
+                            <td>खाद्य तथा दाना अनुज्ञा पत्र जारी</td>
+                            <td>संख्या</td>
+                            <td>{{obj.patrajari|default_if_none:'----'}}</td>
+                            <td>{{patra_jari_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{patra_jari_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>7</td>
+                            <td>खाद्य तथा दाना अनुज्ञा पत्र नविकरण</td>
+                            <td>संख्या</td>
+                            <td>{{obj.patranabikaran|default_if_none:'----'}}</td>
+                            <td>{{patra_nabikaran_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{patra_nabikaran_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>8</td>
+                            <td>उद्योग सिफारिस</td>
+                            <td>संख्या</td>
+                            <td>{{obj.udyog_sifaris|default_if_none:'----'}}</td>
+                            <td>{{udyog_sifaris_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{udyog_sifaris_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>9</td>
+                            <td>आयात निर्यात गुण प्रमाणिकरण</td>
+                            <td>संख्या</td>
+                            <td>{{obj.aayat_niryat|default_if_none:'----'}}</td>
+                            <td>{{ayat_niryat_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{aayat_niryat_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>10</td>
+                            <td>उजुरी/गुनासो ब्येवस्थापन</td>
+                            <td>संख्या</td>
+                            <td>{{obj.ujuri_gunaso|default_if_none:'----'}}</td>
+                            <td>{{ujuri_gunaso_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{ujuri_gunaso_sum|default_if_none:'----'}}</td>
+                          </tr>
+                          <tr>
+                            <td>11</td>
+                            <td>RBPR Analysis</td>
+                            <td>संख्या</td>
+                            <td>{{obj.rbpr|default_if_none:'----'}}</td>
+                            <td>{{rbpa_analysis_monthly_sum|default_if_none:'----'}}</td>
+                            <td>{{rbpa_analysis_sum|default_if_none:'----'}}</td>
+                          </tr>
+                        </tbody>
+                    </table>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.4/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.2/moment.min.js"></script>
+    <script src="https://cdn.datatables.net/datetime/1.4.1/js/dataTables.dateTime.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.53/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.3.6/js/buttons.print.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
+
+    <script src="../datepicker/nepali-date-picker.min.js"></script>
+
+    <script src="../../js/script.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/xlsx@0.15.1/dist/xlsx.full.min.js"></script>
+
+
+    <script>
+        function ExportToExcel(type, fn, dl) {
+        var elt = document.getElementById('monthly_report');
+        var wb = XLSX.utils.table_to_book(elt, { sheet: "sheet1" });
+        return dl ?
+          XLSX.write(wb, { bookType: type, bookSST: true, type: 'base64' }):
+          XLSX.writeFile(wb, fn || ('MySheetName.' + (type || 'xlsx')));
+    }
+
+    $(document).ready(function(){
+        $("#month").change(function(){
+            $("#report-container").css("display", "block");
+            var selectedValue = $(this).val();
+            var url = '?month=' + selectedValue;
+            window.location.href = url;
+        });
+        $("#reset").click(function(){
+            $("#month").val("all");
+            $("#report-container").css("display", "none");
+        });
+    });
+    $("#report-container").css("display", "block");
+    </script>
+
+    
+
+{% endblock %}

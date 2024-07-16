@@ -1,0 +1,96 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block container %}
+    <div class="add-heading">
+        <h3 class="heading-cm">
+            <a href="" class="nav-icon me-2">
+                <i class="fa-solid fa-angle-left"></i>
+            </a>
+            User<span class="sub-nav ms-2"> > All</span>
+        </h3>
+        <p><a href=""><i class="fa-regular fa-eye"></i>View Users</a></p>
+    </div>
+
+    {% for message in messages %}
+        {% if message.tags == "success" %}
+            <div class="alert alert-success">{{ message }}</div>
+        {% elif message.tags == "error" %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% elif message.tags == "info" %}
+            <div class="alert alert-warning">{{ message }}</div>
+        {% endif %}
+    {% endfor %}
+
+    <div class="table-row">
+        <div class="row mb-4 filter-row filters">
+            <div class="col-md-4">
+                <select id="role" class="form-select kit-form-control">
+                    <option value="" disabled selected>Select Role</option>
+                    <option value="Data Entry Operator">Data Entry Operator</option>
+                    <option value="Report Viewer">Verifier</option>
+                    <option value="Report Viewer">Admin</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control cm" id="min" name="min" placeholder="From">
+            </div>
+            <div class="col-md-3">
+                <input type="text" class="form-control cm" id="max" name="max" placeholder="To">
+            </div>
+            <div class="col-md-2">
+                <button id="reset">Reset</button>
+            </div>
+        </div>
+    
+        <table id="sampleTable" class="table table-striped" style="width:100%">
+            <thead>
+                <tr>
+                    <th>S No.</th>
+                    <th>User Name</th>
+                    <th>Email Address</th>
+                    <th>Role</th>
+                    <th>Department</th>
+                    <th>Office</th>
+                    <th>Created Date</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in users %}
+                <tr>
+                    <td>{{forloop.counter}}</td>
+                    <td>{{u.username}}</td>
+                    <td>{{u.email}}</td>
+                    <td>{{u.get_role_display}}</td>
+                    <td>{{u.get_department_category_display}}</td>
+                    <td>{{u.office.office_name}}</td>
+                    <td>{{u.date_joined|date:"Y-m-d"}}</td>
+    
+                    <td>
+                        <div class="d-flex kit-action-com">
+                            <div class="action-btn-pen">
+                            <a href="{% url 'user-edit' id=u.id %}" method="put"><span class="material-symbols-outlined">
+                                    edit
+                                    </span></a>
+                            </div>
+    
+                            <form class="action-btn-dlt" action="{% url 'user-delete' id=u.id %}" method="post">
+                                {% csrf_token %}
+                                <button type="submit">
+                                    <i class="fa-regular fa-trash-can"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
+
+
+
+
+
+    

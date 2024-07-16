@@ -1,0 +1,74 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% block container %}
+    <div class="add-heading">
+        <h3 class="heading-cm">
+            <a href="" class="nav-icon me-2">
+                <i class="fa-solid fa-angle-left"></i>
+            </a>
+            My Profile<span class="sub-nav ms-2"> > {{user.name}}</span>
+        </h3>
+    </div>
+
+    {% for message in messages %}
+        <div class="alert alert-success">{{ message }}</div>
+    {% endfor %}
+
+    <div class="form-cm">
+        <div class="row userprofile-das">
+            <div class="col-md-6 userprofile-das-left">
+                <div class="me-3 userprofile-das-div"> <img
+                        src="https://ui-avatars.com/api/?name=Pradeep+Marasini&rounded=true&background=FB802C&color=ffffff&size=28&bold=true"
+                        alt=""></div>
+
+                <div class="userprofile-text">
+                    <h3 class="username">{{user.username}}</h3>
+                    <p class="username-sm"> Role : <span>{{user.get_role_display}}</span> </p>
+                </div>
+            </div>
+            <div class="col-md-6 userprofile-das-right">
+                <a href="{% url 'user-edit' id=user.id %}">Edit Details</a>
+                <a href="{% url 'password-change' id=user.id %}">Change Password</a>
+            </div>
+        </div>
+        <div class="row userprofile-details">
+            <div class="userdetails-heading">
+                User Details
+            </div>
+            <div class="col-md-3">
+                <h3>Full Name</h3>
+                <p>{{user.name}}</p>
+            </div>
+            <div class="col-md-3">
+                <h3>Username</h3>
+                <p>{{user.username}}</p>
+            </div>
+            <div class="col-md-3">
+                <h3>Phone Number</h3>
+                <p>{{user.phone_number}}</p>
+            </div>
+            <div class="col-md-3">
+                <h3>Email</h3>
+                <p>{{user.email}}</p>
+            </div>
+        </div>
+        <div class="row userprofile-details">
+            <div class="col-md-3">
+                <h3>Department Name</h3>
+                <p>{{user.get_department_category_display}}</p>
+            </div>
+            <div class="col-md-3">
+                <h3>Office Name</h3>
+                <p>{{user.office.name}}</p>
+            </div>
+            <div class="col-md-3">
+                <h3>Office Address</h3>
+                <p>{{user.office.address}}</p>
+            </div>
+            <div class="col-md-3">
+                <h3>Office Contact Number</h3>
+                <p>{{user.office.contact_no}}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

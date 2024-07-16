@@ -1,0 +1,88 @@
+{% extends 'report/finance/yearly_budget.html' %}
+{% load static %}
+{% load nepali_month_filter %}
+{% block sublink %}
+<ul class="nav nav-tabs">
+  {% url 'monthly-expense-report' as monthly_expense_report_url %}
+<li class="nav-item">
+<a class="nav-link {% if request.path == monthly_expense_report_url %} active {% endif %}" aria-current="page" href="{% url 'monthly-expense-report'%}">Monthly Expense</a>
+</li>
+{% url 'quarterely-expense-report' as quarterely_expense_report_url %}
+<li class="nav-item">
+<a class="nav-link {% if request.path == quarterely_expense_report_url %} active {% endif %}" href="{% url 'quarterely-expense-report'%}">Quarterely Expense</a>
+</li>
+{% url 'yearly-expense-report' as yearly_expense_report_url %}
+<li class="nav-item">
+    <a class="nav-link {% if request.path == yearly_expense_report_url %} active {% endif %}" href="{% url 'yearly-expense-report'%}">Yearly Expense</a>
+    </li>
+</ul>
+{% endblock %}
+{% block table_content %}
+<div class="row mb-4 filter-row filters">
+    <div class="row">
+        {% comment %} <div class="col-md-5">
+            <select id="office" name="status" class="form-select kit-form-control">
+                <option value="all" disabled selected>कार्यालय छान्नुहोस्</option>
+                <option value="Pending">Pending</option>
+                <option value="Verified">Verified</option>
+                <option value="Rejected">Rejected</option>
+            </select>
+        </div> {% endcomment %}
+        <div class="col-md-3">
+            <select id="month" name="status" class="form-select kit-form-control">
+                <option value="all" disabled selected>महिना छान्नुहोस्</option>
+                <option value="बैशाख">बैशाख</option>
+                <option value="जेठ">जेठ</option>
+                <option value="असार">असार</option>
+                <option value="श्रावण">श्रावण</option>
+                <option value="भदौ">भदौ</option>
+                <option value="आश्विन">आश्विन</option>
+                <option value="कार्तिक">कार्तिक</option>
+                <option value="मंसिर">मंसिर</option>
+                <option value="पुष">पुष</option>
+                <option value="माघ">माघ</option>
+                <option value="फाल्गुन">फाल्गुन</option>
+                <option value="चैत्र">चैत्र</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button id="filter">फिल्टर</button>
+        </div>
+        <div class="col-md-2">
+            <button id="reset">रिसेट</button>
+        </div>
+    </div>
+</div>
+
+
+<table id="sampleTable" class="table hover-table" style="width:100%">
+    <thead>
+        <tr>
+            <th>क्र. सं.</th>
+            {% if request.user.role != 'DE' %}
+                <th>कार्यालय</th>
+            {% endif %}
+            <th>आर्थिक वर्ष </th>
+            <th>त्रैमासिक </th>
+            <th>पुजिगत</th>
+            <th>चालुगत</th>
+            <th>जम्मा</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for quarter, total_expense in quarter_totals.items %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            {% if request.user.role != 'DE' %}
+                <td>{{ total_expense.created_by.office.name }}</td>
+            {% endif %}
+            <td>{{ aarthik_barsa }}</td>
+            <td>{{ quarter }}</td>
+            <td>{{ total_expense.total_pujigat|default:0 }}</td>
+            <td>{{ total_expense.total_chalugat|default:0 }}</td>
+            <td>{{ total_expense.total|default:0 }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
